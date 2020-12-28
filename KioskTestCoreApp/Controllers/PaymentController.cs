@@ -35,12 +35,11 @@ namespace KioskTestCoreApp.Controllers
                 serialPort.Open();
             }
             serialPort.Write($"{Amount}");
-            //serialPort.DataReceived += new SerialDataReceivedEventHandler(SerialPort_DataReceived);
             Thread.Sleep(40000);
             var b = 0;
-            var a = serialPort.ReadExisting();
+            var response = serialPort.ReadExisting();
             var rng = new Random();
-            if (a.Contains("Response Code = 00"))
+            if (response.Contains("Response Code = 00"))
             {
                 return new PaymentResponse
                 {
@@ -50,10 +49,9 @@ namespace KioskTestCoreApp.Controllers
             }
             return new PaymentResponse
             {
-                IsSuccess=false,
-                UniqueId= UniqueId
-            }
-            ;
+                IsSuccess = false,
+                UniqueId = UniqueId
+            };
         }
     }
 }
